@@ -1,0 +1,81 @@
+\documentclass[11pt, a4paper]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{framed}
+%\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[section]
+
+\title{Everything Summer `26}
+\author{Absur Khan Siam}
+\date{\today}
+
+\begin{document}
+\maketitle
+\section{Kitaev Quantum Double Model}
+The flow: Fix a lattice $\rightarrow$ edges with quantum degrees of freedom $\rightarrow$ local operators and Hamiltonian $\rightarrow$ ground state and excitations.
+
+\textit{State space:} Lattice with V, E, and F: the set of vertices, edges, and faces, respectively. Assign an orientation to each $e \in \mathrm{E}$ (arbitrary).
+\begin{equation*}
+    \text{Sites } \mathcal{S} = \{(p,~v)~|~p \in F,~v \in \partial p\}.
+\end{equation*}
+At every edge $e \in \mathrm{E}$, we put a $|G|$-dimensional qudit $\mathcal{H}_e = \mathbb{C}[G]$ with computational basis $\{|g\rangle\}$. Total Hilbert space $\mathcal{H}_\text{tot} = \otimes_{e \in E} \mathcal{H}_e$ with $\text{dim}(\mathcal{H}_\text{tot}) = |G|^{|E|}$. Also,
+\begin{equation*}
+    |g_{e_1}~g_{e_2} \dots g_{e_{|E|}}\rangle := |g_{e_1}\rangle \otimes |g_{e_1}\rangle \otimes \dots \otimes |g_{e_{|E|}}\rangle.
+\end{equation*}
+Note: The ring multiplication structure of $\mathbb{C}[G]$ comes into play in the local operators.
+
+\textit{Hamiltonian:} $A_g(v)$ is defined as follows:
+\begin{equation*}
+    |\dots g_1~g_2~g_3~g_4\dots\rangle \mapsto |\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
+\end{equation*}
+(Note that $A_{g_1}A_{g_2} = A_{g_1g_2}$ since $g_2^{-1}g_1^{-1} = (g_1g_2)^{-1}$.)
+We define the vertex operator $A(s)$ where $s \in \mathcal{S}$:
+\begin{equation*}
+    A(s) := A(v) = \frac{1}{|G|}\sum_g A_g(v)
+\end{equation*}
+This is a projector. \textit{Proof}: $A^2(s) = \frac{1}{|G|^2}\sum_{g_1,~g_2}A_{g_1}A_{g_2}(v) = \frac{1}{|G|^2}\sum_{g_1,~g_2}A_{g_1g_2}(v)$.\\
+Now, due to the rearrangement of finite groups, $\frac{1}{|G|^2}\sum_{g_1,~g_2}A_{g_1g_2}(v) = \frac{1}{|G|^2}\sum_{g_1}\left(\sum_gA_{g}(v)\right) = \frac{1}{|G|^2}\cdot|G|\cdot \sum_g A_g(v) = A(v)$. \qed
+
+$B_h(v)$ is defined as follows:
+
+If $h = e$, the relation $g^{o(e_1)}g^{o(e_2)}g^{o(e_3)}g^{o(e_4)} = e$ can be cyclically permuted ($o(e)$ is the orientation of edge $e$). Hence, the starting vertex for traversing the plaquette $p$ \textbf{does not} matter.
+
+$A_g(s)$ and $B_h(s)$ do not commute but satisfy \begin{equation}
+    A_g(s)B_h(s) = B_{ghg^{-1}}(s)A_g(s).
+\end{equation}
+
+In a more convenient notation, $A_g(v)B_h(p) = B_{ghg^{-1}}(p)A_g(v)$. This means that we start traversing the plaquette $p$ counterclockwise from vertex $v$.
+
+Firstly,
+\begin{align*}
+    A_g(v)B_h(p)|\dots g_1~g_2~g_3~g_4\dots\rangle
+    &= \delta_{h,~g_2^{-1}g_3g_4g_1^{-1}}A_g(v)|\dots g_1~g_2~g_3~g_4\dots\rangle\\
+    &= \delta_{h,~g_2^{-1}g_3g_4g_1^{-1}}A_g(v)|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
+\end{align*}
+Here, we ignore the effects of $A_g(v)$ on the rest of the vertices since they are irrelevant in this context. Secondly,
+\begin{align*}
+    & B_{ghg^{-1}}(p)A_g(v)|\dots g_1~g_2~g_3~g_4\dots\rangle\\
+    &= B_{ghg^{-1}}(p)|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle\\
+    &= \delta_{ghg^{-1},~\left(g_2g^{-1}\right)^{-1}g_3g_4\left(gg_1\right)^{-1}}A_g(v)|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
+\end{align*}
+Finally, we note that the conditions
+\begin{align*}
+    ghg^{-1} &= \left(g_2g^{-1}\right)^{-1}g_3g_4\left(gg_1\right)^{-1}\\
+    \Leftrightarrow ghg^{-1} &= g\left(g_2^{-1}g_3g_4g_1^{-1}\right)g^{-1}\\
+    \Leftrightarrow h &= g_2^{-1}g_3g_4g_1^{-1}
+\end{align*}
+are all equivalent, meaning that
+\begin{equation*}
+    A_g(v)B_h(p) = B_{ghg^{-1}}(p)A_g(v) \qed
+\end{equation*}
+
+\footnotesize{If we flip the direction of $e_1$, we get $h = g_2^{-1}g_3g_4g_1$ and $ghg^{-1} = \left(g_2g^{-1}\right)^{-1}g_3g_4\left(g_1g^{-1}\right)$, which are also equivalent. The argument is similar if we flip $e_2$.}
+
+
+
+\end{document}
