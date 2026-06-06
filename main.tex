@@ -26,6 +26,7 @@
 \begin{definition}[Group]
 A group $(G,\cdot)$ is a set $G$ with a binary operation $\cdot:~G\times G \to G$ with a multiplicative identity and an inverse for all $g \in G$, and the binary operation is associative.
 \end{definition}
+
 \begin{definition}[Vector Space]
     A vector space over a field $F$ is a non-empty set $V$ together with a binary operation and a binary function that satisfy the following eight axioms: 
     
@@ -40,18 +41,40 @@ A group $(G,\cdot)$ is a set $G$ with a binary operation $\cdot:~G\times G \to G
     (8). distributivity of scalar multiplication with respect to field addition.
 \end{definition}
 
-\begin{definition}
+\begin{definition}[Ring]
     A ring $(R,+,\cdot)$ is a set $R$ with two binary operations called addition and multiplication such that $(R,+)$ is an abelian group, the multiplication $\cdot$ is associative, and the left and right distributive properties hold.
 \end{definition}
 We usually care about \textit{unital rings}: there exists a multiplicative identity $1 \in R$ with $1 \cdot r = r\cdot 1 = r$ for all $r \in R$.
+
 \begin{definition}[Algebra]
     An algebra over $\mathbb{C}$ is a vector space (over $\mathbb{C}$) that is also a ring.
 \end{definition}
+
 \begin{definition}[Group Algebra]
     The group algebra $\mathbb{C}[G]$ is the complex vector space with basis $|g\rangle$, $|g\rangle \in G$ and multiplication on basis elements induced by group multiplication $|g\rangle\cdot|h\rangle = |gh\rangle$. 
     
     Multiplication on all of $\mathbb{C}[G]$ comes from extending the multiplication to arbitrary linear combinations of basis elements. The multiplicative unit is $|e\rangle$, where $e$ is the identity element of $G$.
 \end{definition}
+
+\begin{definition}[Dual of group algebra]
+    The dual of a group algebra $\mathbb{C}[G]$ is the algebra $\hat{\mathbb{C}}[G]$ of linear functions of a finite group: it is the complex vector space with indicator function basis $|I_g\rangle$, $g \in G$ with multiplication of basis elements given by $|I_g\rangle\cdot|I_h\rangle = \delta_
+    {g,h}|I_g\rangle$, where $\delta$ is the Kronecker delta function.
+    \begin{align*}
+        I_g : G &\to \mathbb{C}\\
+        h &\mapsto \begin{cases}
+        1 \quad h = g\\
+        0 \quad h \neq g
+        \end{cases}
+    \end{align*}
+The multiplicative unit is $\sum_g|I_g\rangle$.
+\end{definition}
+
+\begin{definition}[Doubled algebra]
+    We build a ``doubled" algebra $DG$ that has a copy of each of $\mathbb{C}[G]$ and $\hat{\mathbb{C}}[G]$. As a vector space, $DG = \hat{\mathbb{C}}[G] \otimes \mathbb{C}[G]$.
+\end{definition}
+
+$\mathbb{C}[G]$, its dual $\hat{\mathbb{C}}[G]$, and the doubled algebra $DG$ are all Hopf Algebras (we skip the details for now).
+
 \begin{definition}[Fundamental Group]
     The fundamental group $\pi_1(X,x)$ of a space $X$ with respect to a basepoint $x$ is the set of homotopy (continuous deformation) classes of loops based at $x$ with multiplication inherited from concatenation of paths.
 \end{definition}
@@ -94,14 +117,14 @@ In a more convenient notation, $A_g(v)B_h(p) = B_{ghg^{-1}}(p)A_g(v)$. This mean
 Firstly,
 \begin{align*}
     A_g(v)B_h(p)|\dots g_1~g_2~g_3~g_4\dots\rangle
-    &= \delta_{h,~g_2^{-1}g_3g_4g_1^{-1}}A_g(v)|\dots g_1~g_2~g_3~g_4\dots\rangle\\
-    &= \delta_{h,~g_2^{-1}g_3g_4g_1^{-1}}|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
+    &= \delta_{h,g_2^{-1}g_3g_4g_1^{-1}}A_g(v)|\dots g_1~g_2~g_3~g_4\dots\rangle\\
+    &= \delta_{h,g_2^{-1}g_3g_4g_1^{-1}}|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
 \end{align*}
 Here, we ignore the effects of $A_g(v)$ on the rest of the vertices since they are irrelevant in this context. Secondly,
 \begin{align*}
     & B_{ghg^{-1}}(p)A_g(v)|\dots g_1~g_2~g_3~g_4\dots\rangle\\
     &= B_{ghg^{-1}}(p)|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle\\
-    &= \delta_{ghg^{-1},~\left(g_2g^{-1}\right)^{-1}g_3g_4\left(gg_1\right)^{-1}}A_g(v)|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
+    &= \delta_{ghg^{-1},\left(g_2g^{-1}\right)^{-1}g_3g_4\left(gg_1\right)^{-1}}A_g(v)|\dots gg_1~gg_2~g_3g^{-1}~g_4g^{-1}\dots\rangle.
 \end{align*}
 Finally, we note that the conditions
 \begin{align*}
